@@ -1,0 +1,142 @@
+/* Custom CSS */
+
+/* Reset default margin, padding, and font-family */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Container for video background */
+.video-container {
+  position: relative;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Hide overflow content */
+}
+
+/* Video background */
+#video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Scale video to cover container */
+}
+
+/* Overlay for content */
+.overlay1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+}
+
+/* Main content overlay */
+.overlay {
+  background-color: rgba(105, 220, 99, 0.1); /* Light green semi-transparent overlay */
+  padding: 40px; /* Padding around content */
+  border-radius: 10px; /* Rounded corners */
+}
+
+/* Content container */
+.container {
+  text-align: center; /* Center align text */
+  color: #fff; /* White text color */
+  width: 800px; /* Set width of content */
+  padding: 80px 0px; /* Padding top and bottom */
+}
+
+/* Title styling */
+.serchtitle {
+  margin-bottom: 1.5rem; /* Bottom margin for spacing */
+  color: #ffffff; /* White text color */
+  font-size: 50px; /* Large font size */
+  letter-spacing: 5px;
+}
+
+/* Search input styling */
+.form-control {
+  height: 50px; /* Set height of input */
+  padding: 0.5rem; /* Padding inside input */
+  border: none; /* Remove border */
+  background-color: #fff; /* White background color */
+  background-position: right 10px center; /* Position background image */
+  background-size: 20px 20px; /* Size of background image */
+  background-repeat: no-repeat; /* Do not repeat background image */
+  background-attachment: fixed; /* Fix background image */
+  border-radius: 60px; /* Rounded corners */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+/* Styling for focused search input */
+#searchWord {
+  padding-left: 40px; /* Add padding to left */
+  padding-right: 40px; /* Add padding to right */
+}
+
+.form-control:focus {
+  height: 60px; /* Increase height when focused */
+  background-color: #ffffff; /* White background color */
+  opacity: 0.9; /* Reduce opacity when focused */
+  border: none; /* Remove border */
+}
+
+/* Styling for input group */
+.input-group {
+  max-width: 500px; /* Set max width of input group */
+  margin: auto; /* Center align input group */
+}
+
+/* Styling for search button */
+.input-group-append button {
+  border-radius: 0 60px 60px 0; /* Rounded corners */
+}
+
+/* Styling for search results container */
+#searchResults {
+  max-height: 300px; /* Set max height of search results */
+  overflow-y: auto; /* Enable vertical scroll if needed */
+  color: #fff; /* White text color */
+  overflow-x: hidden;
+  
+}
+
+/* Styling for warning message */
+.alert-warning {
+  color: #070707; /* Text color */
+  background-color: #f5f6f6; /* Background color */
+  border-color: #ffeeba; /* Border color */
+  padding: 0.75rem 1.25rem; /* Padding */
+  margin-bottom: 1rem; /* Bottom margin */
+  border: 1px solid transparent; /* Border */
+  border-radius: 50px; /* Rounded corners */
+  margin-top: 40px; /* Top margin */
+  height: 50px; /* Height of warning message */
+  width: 400px;
+  margin:  30px auto;
+}
+
+/* Styling for result links */
+.result-links {
+  margin-top: 20px; /* Top margin */
+  text-align: center; /* Center align text */
+  line-height: 50px; /* Set line height */
+}
+
+/* Styling for result link */
+.result-link {
+  display: block; /* Display as block element */
+  margin-bottom: 0.5rem; /* Bottom margin */
+  color: #fff; /* White text color */
+  text-decoration: none; /* Remove underline */
+}
+
+/* Styling for result link on hover */
+.result-link:hover {
+  text-decoration: underline; /* Underline on hover */
+  color: #0056b3; /* Text color on hover */
+  transition: 0.7s; /* Smooth transition effect */
+}

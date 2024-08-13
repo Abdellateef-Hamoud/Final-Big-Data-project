@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toogle</title>
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Link to custom CSS -->
+  <link rel="stylesheet" href="./newstyle.css">
+</head>
+<body>
+  <!-- Video container -->
+  <div class="video-container">
+    <!-- Background video -->
+    <video autoplay muted loop id="video-background" class="w-100">
+      <source src="./3130284-uhd_3840_2160_30fps.mp4" type="video/mp4">
+    </video>
+    <!-- Overlay for content -->
+    <div class="overlay1 d-flex justify-content-center align-items-center">
+      <!-- Content container -->
+      <div class="overlay">
+        <!-- Main content -->
+        <div class="container">
+          <!-- Title -->
+          <h1 class="serchtitle">Toogle</h1>
+          <!-- Search form -->
+          <form id="searchForm" class="search-form">
+            <div class="input-group">
+              <!-- Search input -->
+              <input
+                type="text"
+                class="form-control with-icon"
+                id="searchWord"
+                placeholder="Enter search word"
+                required
+              />
+              <!-- Search button -->
+              <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Search</button>
+              </div>
+            </div>
+          </form>
+          <!-- Search results -->
+          <div id="searchResults"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap bundle -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <!-- JavaScript code -->
+
+  <script>
+    // Wait for the document to be ready before executing any jQuery code
+    $(document).ready(function() {
+      // Search behavior when clicking the search button
+      $(".btn-success").click(function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        search(); // Call the search function
+      });
+      
+      // Search behavior when pressing the Enter key
+      $("#searchWord").on('keypress', async function(event) {
+        if (event.which === 13) { // Check if the pressed key is Enter
+          event.preventDefault(); // Prevent the default form submission behavior
+          search(); // Call the search function
+        }
+      });
+  
+      // Search function
+      async function search() {
+        const searchWord = $("#searchWord").val().trim(); // Get the search word from the input field
+        if (!searchWord) { // Check if the search word is empty
+          return; // If it's empty, do nothing
+        } 
+  
+        try {
+          const filePath = "./dd.unknown"; // Define the file path
+          const fileContent = await fetch(filePath).then(response => response.text()); // Fetch the file content
+  
+          // Process the file content to find matching results
+          const searchResults = fileContent
+            .split("\n")
+            .map(line => {
+              const parts = line.split("\t");
+              const word = parts[0];
+              const restOfLine = parts.slice(1).join("\t");
+              return { word, restOfLine };
+            })
+            .filter(({ word }) => word.includes(searchWord))
+            .reduce((uniqueResults, { word, restOfLine }) => {
+              uniqueResults.add(restOfLine);
+              return uniqueResults;
+            }, new Set());
+  
+          displayResults(searchResults); // Display the search results
+        } catch (error) {
+          console.error("Error fetching file:", error); // Log any errors to the console
+          alert("An error occurred while fetching the file."); // Show an alert for any errors
+        }
+      }
+  
+      // Function to display search results
+      function displayResults(results) {
+        const searchResultsDiv = $("#searchResults"); // Get the search results container
+        searchResultsDiv.empty(); // Clear any existing search results
+        
+        // Check if there are any matching results
+        if (results.size === 0) {
+          searchResultsDiv.append(
+            '<div class="alert alert-warning">No matching results found.</div>'
+          ); // If no results found, display a warning message
+        } else {
+          let links = '<div class="result-links">'; // Start building the HTML for the result links
+          results.forEach(restOfLine => {
+            const decodedLine = decodeUrl(restOfLine); // Decode the URL
+            links += decodedLine; // Add the decoded URL to the links HTML
+          });
+          links += '</div>'; // Close the result links container
+          searchResultsDiv.append(links); // Append the links HTML to the search results container
+        }
+      }
+  
+      // Function to decode URLs for displaying links
+      function decodeUrl(url) {
+        var decodedUrl = decodeURIComponent(url)
+          .replace(/SLASH/g, "/")
+          .replace(/DOU_SLASH/g, "\\")
+          .replace(/COL/g, ":")
+          .replace(/STAR/g, "*")
+          .replace(/QMARK/g, "?")
+          .replace(/QUOAT/g, '"')
+          .replace(/LESS/g, "<")
+          .replace(/GREATER/g, ">")
+          .replace(/PIL/g, "|")
+          .replace(/\.txt$/i, "");
+        var splits = decodedUrl.split(";");
+        var links = "";
+        splits.forEach(function(split) {
+          var linkWithoutTxt = split.split(".txt")[0];
+          links +=
+            '<a href="https://' +
+            linkWithoutTxt +
+            '" class="result-link" target="_blank">' +
+            linkWithoutTxt +
+            "</a>"; // Build the HTML for each link
+        });
+        return links; // Return the HTML for all links
+      }
+    });
+  </script>
+</body>
+</html>
